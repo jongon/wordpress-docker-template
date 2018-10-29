@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  wordpress:
+    environment:
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: root
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_AUTH_KEY: UT10Pdx5u;6|!D3rS}>yKjo{$$?rIl@qF4h%aLJEKm$$&P-WOrh}~tlFuyM fk{$$;5
+      WORDPRESS_SECURE_AUTH_KEY: qD8i H.oUPrfv0HZ<=)M`{<H[3rUN9LJE0tie].)ns3-93/D:nW!P{j|AP-M?%|N
+      WORDPRESS_LOGGED_IN_KEY: 7@a| Xb*op^cCwC9Nt7TVk,yR-v<R[)rS4bG?~wIWC-9YV.$$>N+>td09K&|BOskh
+      WORDPRESS_NONCE_KEY: 4:5KD9Rw|+~*,svhyo!~MjNVS=yac>((Ie=C;4,JA3]<t?H1>Q=):1piN~.Df e=
+      WORDPRESS_AUTH_SALT: vm3nlSHg-=<kwO-yZuPtOH*:K|bqzxD<pbukZFDY72mm3r2%}|g=GE2a53.LxfeR
+      WORDPRESS_SECURE_AUTH_SALT: 3+LyO-_,2kcBawj}B>UO7/d=cn#F`14f>-?#lY.^Bpc~2a8s)*@NfbB(3/1:dD*j
+      WORDPRESS_LOGGED_IN_SALT: 2Mcc2lG|7pzgdY+,aA1N/*u^,oBGQ01pZLr)+B+5@<i|7G630/KGw3A%>wdMZ>/z
+      WORDPRESS_NONCE_SALT: -h+N8Sfu@#:5 ln:5o^IKZ;q4-K>=}+I|;zVy{^Px{BzVLkr{vrB/9psx(&^-a48'
+    volumes:
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      - ./wp-content/themes:/var/www/html/wp-content/themes
+    ports:
+      - 80:80
+    depends_on:
+      - mysql
+    links:
+      - mysql:mysql
+  mysql:
+    container_name: medsolutions.mysql
+    image: mysql:5.7
+    ports:
+      - 3306:33060
+      - 3307:33070
+    volumes:
+      - .data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+volumes:
+  .data: {}
