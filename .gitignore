@@ -1,5 +1,6 @@
 # Created by https://www.gitignore.io/api/wordpress
-
+.vscode
+.data
 ### WordPress ###
 *.log
 wp-config.php
