@@ -1,0 +1,4 @@
+{
+  "*.php": ["php-cs-fixer fix --rules=@PSR2 --verbose", "git add"],
+  "*.{js,json,css,md}": ["prettier --write", "git add"]
+}

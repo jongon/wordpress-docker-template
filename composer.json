@@ -1,0 +1,32 @@
+{
+  "authors": [
+    {
+      "name": "Jonathan González",
+      "email": "jgonzalez@dynamicdevs.io"
+    }
+  ],
+  "keywords": [
+    "medsolutions",
+    "backend",
+    "wordpress"
+  ],
+  "license": "MIT",
+  "name": "medsolutions-backend",
+  "repositories": {
+    "type": {
+      "type": "git",
+      "url": "https://gitlab.com/dynamicdevs/active-products/chile/medsolutions-corporation/website-backend"
+    }
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.13",
+    "squizlabs/php_codesniffer": " 3.3.2"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "npm install",
+      "chmod 777 -R ./wp-content"
+    ]
+  },
+  "version": "1.0.0"
+}

@@ -1,6 +1,14 @@
 # Created by https://www.gitignore.io/api/wordpress
 .vscode
 .data
+.php_cs.cache
+
+### Node Modules ###
+node_modules
+
+### Composer ###
+vendor
+
 ### WordPress ###
 *.log
 wp-config.php

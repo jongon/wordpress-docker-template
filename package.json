@@ -1,0 +1,21 @@
+{
+  "author": "Jonathan González",
+  "description": "Node Packages for development purposes only",
+  "devDependencies": {
+    "husky": "^1.1.2",
+    "lint-staged": "^8.0.0",
+    "prettier": "^1.14.3"
+  },
+  "keywords": [
+    "medsolutions",
+    "backend",
+    "wordpress"
+  ],
+  "license": "MIT",
+  "name": "medsolutions-backend",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/dynamicdevs/active-products/chile/medsolutions-corporation/website-backend"
+  },
+  "version": "1.0.0"
+}
