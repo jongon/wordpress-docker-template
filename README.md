@@ -1,111 +1,84 @@
-# Wordpress
+# Headless Wordpress Docker
 
-Running a LAMP stack can sometimes be painful, sure you can install MAMP or WAMP but then you still have to deal with installing things locally that could potentially conflict with something else.
+This is a Wordpress template for running and debuging in a Docker container. It'll allow for developing without any 3rd party software.
+
+## Description
+
+This is a Headless version of wordpress, It's recommendable for creating a REST API, anyway you can use Plugins and Themes folder for your convenience. Wordpress system files won't be available for edition.
+
+## Docker Compose
+
+`docker-compose-override.yml` file contains a MySql database declaration so that Wordpress could run on the current machine without installing a database, only a MySql container.
+
+## Prerequisites
+
+Following tools you should have installed on your machine
+
+- **Docker** is mandatory.
+- PHP 7.2 or above.
+- Composer 1.7 or above.
+
+_Note: is recomendated using bash for executing files or commands._
+
+## Installation
+
+If debugging this application is required local development environment installation is needed. It could be installed running the following script:
+
+```sh
+sh install.sh
+```
 
 ## Running
 
-- `docker-compose up`
-- Visit http://localhost:8080
+There are 2 ways of running this Wordpress instance:
 
-## Intro
+### Development (No Debug)
 
-Let's look at our `docker-compose.yml`
+Run `run.sh` command:
 
-```yml
-version: "2"
-services:
-  wordpress:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.wordpress
-    links:
-      - db
-    ports:
-      - 8080:80
-    volumes:
-      - ./data:/data # Required if importing an existing database
-      - ./:/app
-    environment:
-      DB_NAME: wordpress
-      DB_PASS: root # must match below
-      WP_DEBUG: "true"
-  db:
-    image: mysql:5.7
-    ports:
-      - 3306:3306
-    volumes:
-      - data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-volumes:
-  data: {}
+```sh
+sh run.sh
 ```
 
-Again this looks similar to our other projects, in here we have a couple things that are different. We are setting environment variables. You can see we are also setting our wordpress to link to db which makes it available for use inside of wordpress. There is also a `run.sh` script in our docker directory that does some setup using wordpress-cli to configure our wp-config and such.
+### Development (Debug Mode)
 
-Looking at our `wp-config.php` we can see, just like the rails example, that we have a connection to our database using internals of docker.
+Locate `php.ini` file in `debug` folder and modify `xdebug.remote_host` attribute
 
-```php
-// ** MySQL settings ** //
-/** The name of the database for WordPress */
-define( 'DB_NAME', 'wordpress' );
-
-/** MySQL database username */
-define( 'DB_USER', 'root' );
-
-/** MySQL database password */
-define( 'DB_PASSWORD', 'root' );
-
-/** MySQL hostname */
-define( 'DB_HOST', 'db:3306' ); // DB:PORT
-
-/** Database Charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8' );
-
-/** The Database Collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '' );
+```sh
+[xdebug]
+zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20170718/xdebug.so
+xdebug.remote_enable=1
+xdebug.remote_autostart=1
+xdebug.remote_host=<your ip address> #Write your Machine's ip address here
+xdebug.remote_port=9000
 ```
 
-This docker compose file is also setting up our mysql server and setting up our initial database as well as user and password.
+Run `run.debug.sh` command:
 
-If you look at the `Dockerfile.wordpress` you can see the base image being used as well as installing of apache and setup.
-
-```dockerfile
-FROM tutum/apache-php
-
-# Install mysql-client, unzip, git-all
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        mysql-client \
-        unzip \
-        git-all \
-        openssh-server \
-        openssh-client \
-        expect \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install wp-cli, configure Apache, & add scripts
-WORKDIR /app
-ADD . /app
-RUN curl \
-        -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-        -o /run.sh https://raw.githubusercontent.com/visiblevc/wordpress-starter/master/run.sh \
-    && chmod +x /usr/local/bin/wp /run.sh \
-    && sed -i "s/AllowOverride None/AllowOverride All/g" /etc/apache2/apache2.conf \
-    && a2enmod rewrite \
-    && service apache2 restart
-
-# Run the server
-EXPOSE 8080
-COPY docker/run.sh /
-RUN chmod +x /run.sh
-CMD ["/run.sh"]
+```sh
+sh run.debug.sh
 ```
 
-## Working
+## VS Code Debuging
 
-After you've run `docker-compose up` you can work on the site just as you normally would. A neat thing here is that you can export the database as a sql file and check that in so that your team can clone the repo and start off with the exact same setup without having to do anything.
+Probably you'll use Visual Studio Code debugging your application is so that. You should create a `launch.json` file on `.vscode` folder it would look like this:
 
-To export the database just run `docker-compose exec wordpress sh -c "cd /data && wp db export --path=/app --allow-root"`
-
-This will create a sql dump in a data directory. This is helpful in dev when the backend is being worked on and content, custom fields, acf or other plugins are being installed. All you have to do is remove the container and then build again by running `docker-compose build`
+```json
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug on Wordpress",
+      "type": "php",
+      "request": "launch",
+      "pathMappings": {
+        "/var/www/html": "${workspaceFolder}"
+      },
+      "port": 9000
+    }
+  ]
+}
+```
