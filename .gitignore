@@ -21,6 +21,7 @@ wp-content/upgrade/
 wp-content/uploads/
 wp-content/mu-plugins/
 wp-content/wp-cache-config.php
+wp-content/plugins/akismet
 wp-content/plugins/hello.php
 wp-content/themes
 !wp-content/themes/headless

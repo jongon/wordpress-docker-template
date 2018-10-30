@@ -1,0 +1,6 @@
+FROM wordpress:4.9.8-php7.2-apache AS final
+
+RUN pecl install xdebug
+
+# copy php.ini file
+COPY ./.debug/php.ini /usr/local/etc/php/

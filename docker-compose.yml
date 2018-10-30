@@ -1,6 +1,9 @@
 version: "3.7"
 services:
   wordpress:
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: medsolutions.wordpress
     image: wordpress:4.9.8-apache
     environment:
