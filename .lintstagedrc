@@ -1,4 +1,4 @@
 {
-  "*.php": ["php-cs-fixer fix --rules=@PSR2 --verbose", "git add"],
+  "wp-content/themes/headless/*.php": ["php-cs-fixer fix --rules=@PSR2 --verbose --config", "git add"],
   "*.{js,json,css,md}": ["prettier --write", "git add"]
 }
