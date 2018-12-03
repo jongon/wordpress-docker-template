@@ -1,6 +1,5 @@
-FROM wordpress:4.9.8-php7.2-apache AS final
-
+ARG WORDPRESS_TAG=4.9-apache
+FROM wordpress:${WORDPRESS_TAG} AS final
 RUN pecl install xdebug
-
 # copy php.ini file
-COPY ./.debug/php.ini /usr/local/etc/php/
+COPY ./debug/php.ini /usr/local/etc/php/

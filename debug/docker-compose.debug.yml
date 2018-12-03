@@ -4,4 +4,6 @@ services:
   wordpress:
     build:
       context: .
-      dockerfile: ./.debug/Dockerfile.debug
+      dockerfile: ./debug/Dockerfile.debug
+    image: ${APPLICATION_NAME}/wordpress:debug
+    container_name: ${APPLICATION_NAME}.debug.wordpress
