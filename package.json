@@ -7,15 +7,14 @@
     "prettier": "^1.14.3"
   },
   "keywords": [
-    "medsolutions",
     "backend",
     "wordpress"
   ],
   "license": "MIT",
-  "name": "medsolutions-backend",
+  "name": "quickstart-wordpress",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/dynamicdevs/active-products/chile/medsolutions-corporation/website-backend"
+    "url": "https://gitlab.com/dynamicdevs/quickstarts/wordpress-docker-template"
   },
   "version": "1.0.0"
 }
