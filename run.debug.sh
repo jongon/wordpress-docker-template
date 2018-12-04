@@ -1,7 +1,7 @@
 APPLICATION_NAME=$(grep APPLICATION_NAME .env | xargs);
 APPLICATION_NAME=${APPLICATION_NAME#*=}
 
-if [ `docker inspect -f {{.State.Running}} $APPLICATION_NAME.debug.wordpress` = 'false' ]; then
+if [ "$(docker inspect -f {{.State.Running}} $APPLICATION_NAME.debug.wordpress)" != 'true' ]; then
   sh install.sh;
 
   docker-compose \
