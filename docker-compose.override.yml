@@ -13,6 +13,8 @@ services:
       WORDPRESS_LOGGED_IN_SALT: 2Mcc2lG|7pzgdY+,aA1N/*u^,oBGQ01pZLr)+B+5@<i|7G630/KGw3A%>wdMZ>/z
       WORDPRESS_NONCE_SALT: -h+N8Sfu@#:5 ln:5o^IKZ;q4-K>=}+I|;zVy{^Px{BzVLkr{vrB/9psx(&^-a48'
     volumes:
+      - ./wp-content/themes:/var/www/html/wp-content/themes
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
       - ./wp-content:/var/www/html/wp-content
     ports:
       - 80:80
